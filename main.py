@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 from llm_handler import get_intent_and_entities
-from services.centre_service import find_nearby_centres, find_centre_by_name, get_total_academy_count
-from services.slot_service import get_available_slots
+from centre_service import find_nearby_centres, find_centre_by_name, get_total_academy_count
+from slot_service import get_available_slots
 
 app = FastAPI()
 
@@ -167,4 +167,5 @@ async def chat_handler(req: ChatRequest):
     
     header = f"Here are the **{len(centres)}** closest academies:\n\n"
     list_items = [f"📍 **{c['post_title']}**\n   {c['address']} ({round(c['distance'], 1)} km)" for c in centres]
+
     return {"reply": header + "\n\n".join(list_items)}
